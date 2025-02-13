@@ -1,0 +1,16 @@
+$databases['default']['default'] = array (
+  'database' => getenv('DB_NAME'),
+  'username' => getenv('DB_USER'),
+  'password' => getenv('DB_PASSWORD'),
+  'host' => getenv('DB_HOST'),
+  'port' => getenv('DB_PORT'),
+  'driver' => getenv('DB_DRIVER'),
+  'isolation_level' => 'READ COMMITTED',
+  'driver' => 'mysql',
+  'namespace' => 'Drupal\\mysql\\Driver\\Database\\mysql',
+  'autoload' => 'core/modules/mysql/src/Driver/Database/mysql/',
+);
+$settings['config_sync_directory'] = '../config/sync';
+$settings['trusted_host_patterns'] = [
+  '^.+',
+];
