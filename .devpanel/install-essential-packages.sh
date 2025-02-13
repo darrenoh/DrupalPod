@@ -21,8 +21,8 @@ if [ "$DP_EXTRA_ADMIN_TOOLBAR" != '1' ]; then
     ADMIN_TOOLBAR_PACKAGE=
 fi
 
-cd "${GITPOD_REPO_ROOT}" && time ddev . composer require --dev "drupal/core-dev":* "phpspec/prophecy-phpunit":^2 -W --no-install
-cd "${GITPOD_REPO_ROOT}" && time ddev . composer require "drush/drush" "drupal/coder" $DEVEL_PACKAGE $ADMIN_TOOLBAR_PACKAGE
+cd "${APP_ROOT}" && time composer -n require --dev "drupal/core-dev":* "phpspec/prophecy-phpunit":^2 -W --no-install
+cd "${APP_ROOT}" && time composer -n require "drush/drush" "drupal/coder" "$DEVEL_PACKAGE" "$ADMIN_TOOLBAR_PACKAGE"
 
 # Only for Drupal core - apply special patch
 if [ "$DP_PROJECT_TYPE" == "project_core" ]; then
@@ -38,11 +38,11 @@ if [ "$DP_PROJECT_TYPE" == "project_core" ]; then
     # Get the major version of 'drush/drush'
     drush_major_version=$(composer show drush/drush --no-ansi | awk '/versions/ {print $NF}' | cut -d '.' -f1)
 
-    drush_command_dir="$GITPOD_REPO_ROOT/drush/Commands/core_development"
+    drush_command_dir="$APP_ROOT/drush/Commands/core_development"
     mkdir -p "$drush_command_dir"
 
     # Copy the correct version of DevelopmentProjectCommands.php file to the drush commands directory
-    cp "$GITPOD_REPO_ROOT/src/drush-commands-core-development/$drush_major_version/DevelopmentProjectCommands.php" "$drush_command_dir/."
+    cp "$APP_ROOT/src/drush-commands-core-development/$drush_major_version/DevelopmentProjectCommands.php" "$drush_command_dir/."
 else
     # Only for contrib - add project as symlink
 
